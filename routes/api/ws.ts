@@ -37,7 +37,7 @@ export const handler: Handlers = {
                         { id: hostId, name: message.username }
                     ],
 
-                    host: message.username
+                    host: hostId
                 })
                 
 
@@ -91,6 +91,46 @@ export const handler: Handlers = {
         
 
 
+            }
+
+            if (message.type == "remove"){
+                const entry = await kv.get(["lobbies", message.code])
+                const lobby = entry.value;
+
+                if(!lobby || lobby.host !== userId) {
+                    return
+                }
+
+                const playerToRemove = lobby.players.find(p => p.name === message.playerName);
+
+
+                if(playerToRemove){
+
+                    connections.delete(playerToRemove.id);
+                    const playerSocket = connections.get(playerToRemove.id);
+
+                    if (playerSocket && playerSocket.readyState === WebSocket.OPEN) {
+                        playerSocket.close();
+                    }
+
+                    lobby.players = lobby.players.filter(p => p.name !== message.playerName);
+                    await kv.set(["lobbies", message.code], lobby);
+
+                    const playerNames = lobby.players.map(p => p.name);
+
+                    for (const player of lobby.players) {
+                        const userSocket = connections.get(player.id);
+
+                        if (userSocket && userSocket.readyState === WebSocket.OPEN) {
+                            userSocket.send(JSON.stringify({
+                                type: "joined",
+                                code: message.code,
+                                players: playerNames
+                            }));
+
+                        }
+                    }
+                }
             }
 
              

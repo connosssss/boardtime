@@ -105,6 +105,16 @@ export default function Lobby() {
         setScreen("joinLobby");
     };
 
+    const handleRemovePlayer = (playerName: string) => {
+        if (socket && isHost) {
+            socket.send(JSON.stringify({ 
+                type: "remove", 
+                code: code, 
+                playerName: playerName 
+            }));
+        }
+    };
+
     const handleStart = () => {
         console.log("start game");
     };
@@ -175,7 +185,17 @@ export default function Lobby() {
 
 
                 {players.map((player) => (
-                    <div> {player}</div>
+                    <div class="flex justify-between items-center px-4">
+                        <div>{player}</div>
+                        {isHost && player !== userName && (
+                            <button 
+                                class="bg-red-400 px-3 py-1 font-semibold"
+                                onClick={() => handleRemovePlayer(player)}
+                            >
+                                Remove
+                            </button>
+                        )}
+                    </div>
                 ))}
             </div>
         
