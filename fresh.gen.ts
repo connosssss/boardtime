@@ -8,6 +8,7 @@ import * as $api_joke from "./routes/api/joke.ts";
 import * as $api_ws from "./routes/api/ws.ts";
 import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
+import * as $App from "./islands/App.tsx";
 import * as $Canvas from "./islands/Canvas.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $Lobby from "./islands/Lobby.tsx";
@@ -24,6 +25,7 @@ const manifest = {
     "./routes/index.tsx": $index,
   },
   islands: {
+    "./islands/App.tsx": $App,
     "./islands/Canvas.tsx": $Canvas,
     "./islands/Counter.tsx": $Counter,
     "./islands/Lobby.tsx": $Lobby,
