@@ -135,8 +135,8 @@ export default function App() {
 
 
     return (
-        <div class="w-full h-screen bg-red-300 flex justify-center">
-            <div class="w-3/4 h-full bg-red-500 rounded-xl">
+        <div class="w-full h-screen bg-[#273346] flex justify-center items-center">
+            
 
                 {screen === "joinLobby" && (
                     <Lobby
@@ -196,7 +196,7 @@ export default function App() {
                     </div>
                 )}
 
-            </div>
+            
         </div>
     );
 }

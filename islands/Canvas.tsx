@@ -10,7 +10,12 @@ export default function Canvas({ socket, code }: CanvasProps) {
     const [isDrawing, setIsDrawing] = useState(false);
     const [lastX, setLastX] = useState(0);
     const [lastY, setLastY] = useState(0);
+
+
+
+
     const [color, setColor] = useState("#000000");
+    const [size, setSize] = useState(2);
 
     useEffect(() => {
         if (!socket) return;
@@ -20,9 +25,12 @@ export default function Canvas({ socket, code }: CanvasProps) {
             if (message.type === "draw") {
                 draw(message.x, message.y, message.prevX, message.prevY, message.color, false);
             }
+
             if (message.type === "clear") {
                 const canvas = canvasRef.current;
                 const context = canvas?.getContext("2d");
+
+
                 if (canvas && context) {
                     context.clearRect(0, 0, canvas.width, canvas.height);
                 }
@@ -46,12 +54,13 @@ export default function Canvas({ socket, code }: CanvasProps) {
         if (!context) return;
 
 
-        // Need to remove hard coding for this
         context.beginPath();
         context.moveTo(prevX, prevY);
         context.lineTo(x, y);
         context.strokeStyle = drawColor;
-        context.lineWidth = 2;
+        context.lineWidth = size;
+        context.lineCap = "round";
+        context.lineJoin = "round";
         context.stroke();
         context.closePath();
 
@@ -115,6 +124,9 @@ export default function Canvas({ socket, code }: CanvasProps) {
                 >
                     Clear
                 </button>
+
+                <input type="range" id="size" min="1" max="50" value={size} onInput={(e) => setSize(Number(e.currentTarget.value))} />
+                <input type="text" id="size" value={size} onInput={(e) => setSize(Number(e.currentTarget.value))} />
             </div>
 
             <canvas
