@@ -26,7 +26,7 @@ export default function Lobby({ userName, setUserName, code, setCode, onJoin, on
                     type="text"
                     value={userName}
                     onInput={(e) => setUserName(e.currentTarget.value)}
-                    class="h-[3rem] p-5 text-center rounded-md"
+                    class="h-[3rem] p-5 text-start rounded-md bg-slate-400  "
                 />
             </div> 
 
@@ -37,7 +37,7 @@ export default function Lobby({ userName, setUserName, code, setCode, onJoin, on
                     type="text"
                     value={code}
                     onInput={(e) => setCode(e.currentTarget.value)}
-                    class="h-[3rem] p-5 text-center rounded-md"/>
+                    class="h-[3rem] p-5 text-start rounded-md bg-slate-400 "/>
 
  
  

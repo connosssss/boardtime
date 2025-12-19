@@ -16,6 +16,7 @@ export default function Canvas({ socket, code }: CanvasProps) {
 
     const [color, setColor] = useState("#000000");
     const [size, setSize] = useState(2);
+    const [erase, setErase] = useState(false);
 
     useEffect(() => {
         if (!socket) return;
@@ -57,7 +58,7 @@ export default function Canvas({ socket, code }: CanvasProps) {
         context.beginPath();
         context.moveTo(prevX, prevY);
         context.lineTo(x, y);
-        context.strokeStyle = drawColor;
+        context.strokeStyle = erase ? "#FFFFFF" : drawColor;
         context.lineWidth = size;
         context.lineCap = "round";
         context.lineJoin = "round";
@@ -123,6 +124,14 @@ export default function Canvas({ socket, code }: CanvasProps) {
                     class="px-4 py-2"
                 >
                     Clear
+                </button>
+                
+
+                <button 
+                    onClick={() => { setErase(!erase);}}
+                    class="px-4 py-2"
+                >
+                    {erase ? "Drawing Mode" : "Erasing Mode"}
                 </button>
 
                 <input type="range" id="size" min="1" max="50" value={size} onInput={(e) => setSize(Number(e.currentTarget.value))} />
