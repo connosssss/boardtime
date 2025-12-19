@@ -11,8 +11,8 @@ interface LobbyProps {
 
 export default function Lobby({ userName, setUserName, code, setCode, onJoin, onCreate }: LobbyProps) {
     return (
-        <div class="h-3/4 w-[40%] flex flex-col gap-12 bg-slate-800 p-10 text-white 
-        rounded-xl shadow-lg justify-center font-mono">
+        <div class="h-3/4 w-[40%] flex flex-col gap-12  p-10 text-white 
+        rounded-xl  justify-center font-mono">
 
             {/* 
             <h1 class="text-4xl mt-8 font-semibold w-full text-start">___</h1>
@@ -44,14 +44,14 @@ export default function Lobby({ userName, setUserName, code, setCode, onJoin, on
  
                 <div class="w-full flex flex-row gap-5">
                     <button
-                        class="w-full h-[3rem] bg-slate-500 hover:bg-slate-600 shadow-md transition-colors duration-200 rounded-md font-semibold"
+                        class="w-full h-[3rem] bg-slate-500 hover:bg-slate-600 transition-colors duration-200 rounded-md font-semibold"
                         onClick={onJoin}
                     >
                         Join Lobby
                     </button>
                 
                     <button
-                        class="w-full h-[3rem] bg-slate-500 hover:bg-slate-600 shadow-md transition-colors duration-200 rounded-md font-semibold"
+                        class="w-full h-[3rem] bg-slate-500 hover:bg-slate-600 transition-colors duration-200 rounded-md font-semibold"
                         onClick={onCreate}
                     >
                         Create Lobby

@@ -135,7 +135,7 @@ export default function App() {
 
 
     return (
-        <div class="w-full h-screen bg-[#273346] flex justify-center items-center">
+        <div class="w-full h-screen bg-[#273346] flex justify-center items-center ">
             
 
                 {screen === "joinLobby" && (
@@ -150,27 +150,38 @@ export default function App() {
                 )}
 
                 {screen === "lobby" && (
-                    <div class="h-full w-full flex flex-col items-center gap-12 ">
+                    <div class="h-full w-full flex flex-col items-center gap-12 text-white font-mono">
                         <h1 class="text-4xl mt-8 font-semibold">{code}</h1>
 
-                        <div class="w-10/12 bg-slate-200 flex flex-col gap-6 text-center">
+                        <div class="w-10/12 flex flex-col gap-6 text-center">
                             {players.map((player) => (
-                                <div class="flex justify-between items-center px-4">
-                                    <div>{player}</div>
+                                <div class="flex flex-row justify-center items-center text-center px-4 gap-18">
+
+
+                                    <div class="text-xl font-semibold flex flex-row gap-4">
+                                        
+                                        <div>{player}</div>
+
+                                    <div class=" ml-18">
                                     {isHost && player !== userName && (
                                         <button
-                                            class="bg-red-400 px-3 py-1 font-semibold"
+                                            class="bg-red-500/75 hover:bg-red-600/75 transition-colors duration-200 px-3 py-1 font-semibold rounded-md "
                                             onClick={() => handleRemovePlayer(player)}
                                         >
                                             Remove
                                         </button>
                                     )}
+                                    </div>
+
+                                    
+                                    </div>
                                 </div>
                             ))}
                         </div>
 
                         <button
-                            class="w-full h-[3rem] bg-emerald-300 rounded-2xl font-semibold"
+                            class="w-3/4 h-[3rem] bg-slate-500 hover:bg-slate-600 transition-colors duration-200 rounded-md font-semibold
+                            "
                             onClick={isHost ? handleStart : handleLeave}
                         >
                             {isHost ? "Start" : "Leave"}
