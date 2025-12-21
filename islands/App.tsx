@@ -135,7 +135,7 @@ export default function App() {
 
 
     return (
-        <div class="w-full h-screen bg-[#273346] flex justify-center items-center ">
+        <div class="w-full min-h-screen bg-[#273346] flex flex-col justify-center items-center ">
             
 
                 {screen === "joinLobby" && (
@@ -189,7 +189,7 @@ export default function App() {
                     </div>
                 )}
 
-                {screen === "game" && (
+                {(screen === "game" || screen == "joinLobby" ) && (
                     <div class="h-full w-full flex flex-col items-center gap-4">
                         <Canvas socket={socket} code={code} />
                         <button

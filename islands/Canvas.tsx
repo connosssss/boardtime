@@ -7,6 +7,8 @@ interface CanvasProps {
 
 export default function Canvas({ socket, code }: CanvasProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null); 
+
     const [isDrawing, setIsDrawing] = useState(false);
     const [lastX, setLastX] = useState(0);
     const [lastY, setLastY] = useState(0);
@@ -18,6 +20,35 @@ export default function Canvas({ socket, code }: CanvasProps) {
     const [size, setSize] = useState(2);
     const [erase, setErase] = useState(false);
 
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (!containerRef.current || !canvasRef.current) return;
+
+            const parent = containerRef.current;
+            const canvas = canvasRef.current;
+            const context = canvas.getContext("2d");
+
+            if (!context) return;
+
+            const curImage = context.getImageData(0, 0, canvas.width, canvas.height);
+            canvas.width = parent.clientWidth;
+            canvas.height = parent.clientHeight;
+
+            context.putImageData(curImage, 0, 0);
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+
+
+    }, []);
+
+    
     useEffect(() => {
         if (!socket) return;
 
@@ -95,15 +126,15 @@ export default function Canvas({ socket, code }: CanvasProps) {
 
 
     return (
-        <div class="flex flex-col items-center gap-4">
-            <div class="flex bg-red-200">
-
+        <div class="flex flex-col items-center gap-4 w-full h-screen bg-gray-100 p-4">
+            
+    
+            <div class="flex flex-wrap gap-2 bg-red-200 p-2 rounded shadow">
                 <input 
                     type="color" 
                     value={color} 
                     onInput={(e) => setColor(e.currentTarget.value)} 
-                    
-                    class="h-10 w-10 cursor-pointer"
+                    class="h-10 w-10 cursor-pointer border-none"
                 />
 
                 <button 
@@ -137,15 +168,22 @@ export default function Canvas({ socket, code }: CanvasProps) {
                 <input type="range" id="size" min="1" max="50" value={size} onInput={(e) => setSize(Number(e.currentTarget.value))} />
                 <input type="text" id="size" value={size} onInput={(e) => setSize(Number(e.currentTarget.value))} />
             </div>
+            
+            <div 
+                ref={containerRef} 
+                class="w-full flex-grow bg-white border-2 border-slate-800 rounded overflow-hidden shadow-lg"
+            >
 
             <canvas
-                ref={canvasRef}  width={800} height={600}
-                class="bg-white border-2 border-slate-800 cursor-crosshair"
+                ref={canvasRef}  
+                class="block cursor-crosshair touch-none"
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={() => {setIsDrawing(false)}}
                 onMouseLeave={() => {setIsDrawing(false)}}
             />
+
+            </div>
 
         </div>
     );
