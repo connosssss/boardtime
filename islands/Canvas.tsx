@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import PlayerList from "./PlayerList.tsx";
 
 
 
@@ -27,7 +26,7 @@ export default function Canvas({ socket, code }: CanvasProps) {
 
 
 
-    const [showPlayerList, setShowPlayerList] = useState(false);
+    
 
 
     useEffect(() => {

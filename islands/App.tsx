@@ -14,6 +14,10 @@ export default function App() {
     const [isHost, setIsHost] = useState(false);
     const [socket, setSocket] = useState<WebSocket | null>(null);
 
+
+    
+    const [showPlayerList, setShowPlayerList] = useState(false);
+
     const handleJoin = () => {
         try {
             const ws = new WebSocket(window.location.origin.replace("http", "ws") + "/api/ws");
@@ -189,21 +193,37 @@ export default function App() {
                     </div>
                 )}
 
-                {(screen === "game" || screen == "joinLobby" ) && (
-                    <div class="h-full w-full flex flex-col items-center gap-4">
-                        <Canvas socket={socket} code={code} />
+                {(screen === "game" || screen == "joinLobby" ) && (<div
+                class="flex flex-col gap-10 w-full justify-center items-center mb-20">
+                    <Canvas socket={socket} code={code} />
+                    <div class="h-full w-full flex flex-row items-center justify-center gap-4">
+                        
                         <button
                             class="px-4 py-2 bg-gray-400 rounded hover:bg-gray-500 text-white"
                             onClick={handleLeave}
                         >
                             Leave Game
                         </button>
+
+                        <button
+                            class="px-4 py-2 bg-gray-400 rounded hover:bg-gray-500 text-white"
+                            onClick={() => {setShowPlayerList(!showPlayerList)}}
+                        >
+                            {showPlayerList ? "Hide Player List" : "Show Player List"}
+                        </button>
+
+                        
+                        
+                    </div>
+
+
+                    {showPlayerList && (
                         <PlayerList
                             players={players}
                             isHost={isHost}
                             currentUserName={userName}
                             onKick={handleRemovePlayer}
-                        />
+                        />)}
                     </div>
                 )}
 

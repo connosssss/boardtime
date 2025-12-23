@@ -8,7 +8,7 @@ interface PlayerListProps {
 
 export default function PlayerList({ players, isHost, currentUserName, onKick }: PlayerListProps) {
     return (
-        <div class="w-full bg-white rounded-lg p-4 ">
+        <div class=" bg-white rounded-lg p-4 w-[98%] ">
             <h3 class="text-xl font-semibold mb-3">Players</h3>
 
 
