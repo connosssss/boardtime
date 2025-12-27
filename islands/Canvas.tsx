@@ -63,7 +63,7 @@ export default function Canvas({ socket, code }: CanvasProps) {
         const handleMessage = (e: MessageEvent) => {
             const message = JSON.parse(e.data);
             if (message.type === "draw") {
-                draw(message.x, message.y, message.prevX, message.prevY, message.color, false);
+                draw(message.x, message.y, message.prevX, message.prevY, message.color, false, message.lineSize);
             }
 
             if (message.type === "clear") {
@@ -84,7 +84,7 @@ export default function Canvas({ socket, code }: CanvasProps) {
         };
     }, [socket]);
 
-    const draw = (x: number, y: number, prevX: number, prevY: number, drawColor: string, emit: boolean) => {
+    const draw = (x: number, y: number, prevX: number, prevY: number, drawColor: string, emit: boolean, lineSize: number) => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -98,7 +98,7 @@ export default function Canvas({ socket, code }: CanvasProps) {
         context.moveTo(prevX, prevY);
         context.lineTo(x, y);
         context.strokeStyle = erase ? "#FFFFFF" : drawColor;
-        context.lineWidth = size;
+        context.lineWidth = lineSize;
         context.lineCap = "round";
         context.lineJoin = "round";
         context.stroke();
@@ -112,7 +112,8 @@ export default function Canvas({ socket, code }: CanvasProps) {
                 y,
                 prevX,
                 prevY,
-                color: drawColor
+                color: drawColor,
+                lineSize
             }));
         }
     };
@@ -126,7 +127,7 @@ export default function Canvas({ socket, code }: CanvasProps) {
     const handleMouseMove = (e: MouseEvent) => {
         if (!isDrawing) return;
 
-        draw(e.offsetX, e.offsetY, lastX, lastY, color, true);
+        draw(e.offsetX, e.offsetY, lastX, lastY, color, true, size);
         setLastX(e.offsetX);
         setLastY(e.offsetY);
     };
