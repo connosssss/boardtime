@@ -2,6 +2,13 @@
 
 inked is a multiplayer drawing board where players can make a room, the host can control whos in the lobby / start the game, and lets people draw with eachother in real time. The main point of the project was to learn more about how websockets work, how lobby online lobby creation / management works, and making sure that everything works correctly with the websockets to make sure that all players recieve the same updates at the same time.
 
+### Installation
+Start off by cloning the repository or downloading the file and unzipping, then run
+```
+deno task start
+```
+
+
 
 ### Pictures
 <img width="1915" height="924" alt="image" src="https://github.com/user-attachments/assets/76f24607-72de-4090-8188-57f1ba5969ac" />
