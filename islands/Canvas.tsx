@@ -219,7 +219,7 @@ export default function Canvas({ socket, code }: CanvasProps) {
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={() => {setIsDrawing(false)}}
-                onMouseLeave={() => {setIsDrawing(false)}}
+                
             />
 
             </div>
